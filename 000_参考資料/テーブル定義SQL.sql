@@ -36,7 +36,7 @@ PRIMARY KEY (`unit_id`) USING BTREE
 # t_stock テーブル
 DROP TABLE IF EXISTS `t_stock`;
 CREATE TABLE IF NOT EXISTS `t_stock` (
-`id` INT(6) NOT NULL COMMENT '在庫商品ID',
+`id` VARCHAR(6) NOT NULL COMMENT '在庫商品ID',
 `name` VARCHAR(50) NOT NULL COMMENT '在庫商品名称',
 `unit_id` INT(11) NOT NULL COMMENT '単位ID',
 `stock_num` INT(11) DEFAULT 0 NOT NULL COMMENT '在庫数量',
@@ -55,7 +55,7 @@ CONSTRAINT fk_t_stock_unit_id FOREIGN KEY (unit_id) REFERENCES m_unit(unit_id) O
 # t_stock_io テーブル
 DROP TABLE IF EXISTS `t_stock_io`;
 CREATE TABLE IF NOT EXISTS `t_stock_io` (
-`id` INT(6) NOT NULL COMMENT '在庫商品ID',
+`id` VARCHAR(6) NOT NULL COMMENT '在庫商品ID',
 `in_out_no` INT(5) DEFAULT 0 NOT NULL COMMENT '入出庫回数',
 `io_type` TINYINT(1) NOT NULL COMMENT '入出庫タイプ',
 `io_num` INT(11) DEFAULT 0 COMMENT '入出庫数量',

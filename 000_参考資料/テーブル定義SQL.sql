@@ -75,7 +75,6 @@ PRIMARY KEY (`id`, `in_out_no`) USING BTREE
 DROP TABLE IF EXISTS `m_code`;
 CREATE TABLE IF NOT EXISTS `m_code` (
 `code_id` INT(11) NOT NULL COMMENT 'コードID',
-`code_id1` INT(11) NOT NULL COMMENT 'コードID1',
 `name` VARCHAR(50) NOT NULL COMMENT 'コード名称',
 `del_flg` TINYINT(1) DEFAULT 0 COMMENT '削除フラグ',
 `create_date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '作成日時',
@@ -83,7 +82,7 @@ CREATE TABLE IF NOT EXISTS `m_code` (
 `update_date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新日時',
 `update_user` VARCHAR(11) DEFAULT '' COMMENT '更新者id',
 `version` SMALLINT DEFAULT 1 COMMENT '楽観鎖',
-PRIMARY KEY (`code_id`, `code_id1`) USING BTREE
+PRIMARY KEY (`code_id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 
@@ -97,9 +96,12 @@ INSERT INTO `m_unit` (`unit_id`, `name`, `del_flg`, `create_date`, `create_user`
 INSERT INTO `m_unit` (`unit_id`, `name`, `del_flg`, `create_date`, `create_user`, `update_date`, `update_user`) VALUES (6, '箱', 0, '2022-10-11 15:42:50', '', '2022-10-11 15:42:50', '');
 INSERT INTO `m_unit` (`unit_id`, `name`, `del_flg`, `create_date`, `create_user`, `update_date`, `update_user`) VALUES (7, '足', 0, '2022-10-11 15:44:17', '', '2022-10-11 15:44:17', '');
 INSERT INTO `m_unit` (`unit_id`, `name`, `del_flg`, `create_date`, `create_user`, `update_date`, `update_user`) VALUES (8, '件', 0, '2022-10-11 15:44:59', '', '2022-10-11 15:44:59', '');
-INSERT INTO `m_code` (`code_id`, `code_id1`, `name`, `del_flg`, `create_date`, `create_user`, `update_date`, `update_user`, `version`) VALUES (1, 2, '購買発注入庫', 0, '2022-10-12 17:22:51', '', '2022-10-12 17:22:51', '', 1);
-INSERT INTO `m_code` (`code_id`, `code_id1`, `name`, `del_flg`, `create_date`, `create_user`, `update_date`, `update_user`, `version`) VALUES (3, 4, '仕入返品', 0, '2022-10-12 17:23:04', '', '2022-10-12 17:23:04', '', 1);
-INSERT INTO `m_code` (`code_id`, `code_id1`, `name`, `del_flg`, `create_date`, `create_user`, `update_date`, `update_user`, `version`) VALUES (5, 6, '出庫', 0, '2022-10-12 17:23:15', '', '2022-10-12 17:23:15', '', 1);
+INSERT INTO `m_code` (`code_id`, `name`, `del_flg`, `create_date`, `create_user`, `update_date`, `update_user`, `version`) VALUES (1, '購買発注入庫', 0, '2022-10-12 17:22:51', '', '2022-10-12 17:22:51', '', 1);
+INSERT INTO `m_code` (`code_id`, `name`, `del_flg`, `create_date`, `create_user`, `update_date`, `update_user`, `version`) VALUES (2, '購買発注入庫取消', 0, '2022-10-12 17:26:55', '', '2022-10-12 17:26:55', '', 1);
+INSERT INTO `m_code` (`code_id`, `name`, `del_flg`, `create_date`, `create_user`, `update_date`, `update_user`, `version`) VALUES (3, '仕入返品', 0, '2022-10-12 17:23:04', '', '2022-10-12 17:23:04', '', 1);
+INSERT INTO `m_code` (`code_id`, `name`, `del_flg`, `create_date`, `create_user`, `update_date`, `update_user`, `version`) VALUES (4, '仕入返品取消', 0, '2022-10-12 17:27:18', '', '2022-10-12 17:27:18', '', 1);
+INSERT INTO `m_code` (`code_id`, `name`, `del_flg`, `create_date`, `create_user`, `update_date`, `update_user`, `version`) VALUES (5, '出庫', 0, '2022-10-12 17:23:15', '', '2022-10-12 17:23:15', '', 1);
+INSERT INTO `m_code` (`code_id`, `name`, `del_flg`, `create_date`, `create_user`, `update_date`, `update_user`, `version`) VALUES (6, '出庫取消', 0, '2022-10-12 17:27:35', '', '2022-10-12 17:27:35', '', 1);
 COMMIT;
 
 

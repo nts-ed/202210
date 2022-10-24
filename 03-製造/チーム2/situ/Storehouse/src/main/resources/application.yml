@@ -1,0 +1,43 @@
+# 服务端口号 Server port サーバポート
+server:
+  port: 8090
+
+# 数据库连接配置 Database connection データベース接続構成
+spring:
+  datasource:
+    # driver-class-name: com.mysql.cj.jdbc.Driver
+    # url: jdbc:mysql://localhost:3306/db?characterEncoding=utf-8&allowMultiQueries=true&serverTimezone=UTC
+    # username: root
+    # password: root123!
+    # Alibaba Druid
+    druid:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql://localhost:3306/db1?characterEncoding=utf-8&allowMultiQueries=true&serverTimezone=Asia/Tokyo
+      username: root
+      password: root123!
+  # Session 配置
+  session:
+    # session 过期时间 单位s
+    timeout: 3600
+    # 存储 session 方式，这里选择为jdbc
+    store-type: jdbc
+  main:
+    allow-circular-references: true
+
+# 日志 Logs ログ
+logging:
+  level:
+    root: info
+    com.northsea: info
+
+# MyBatis Plus 表名前缀 テーブル名のプレフィックス
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    # 自动将_类型的字段名转换为驼峰: false  ,若Entity中定义了带有下划线的参数，则必须把自动转换关闭。例如：private String user_id;
+    map-underscore-to-camel-case: true
+  global-config:
+    db-config:
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+  mapper-locations: classpath:mapper/*Mapper.xml

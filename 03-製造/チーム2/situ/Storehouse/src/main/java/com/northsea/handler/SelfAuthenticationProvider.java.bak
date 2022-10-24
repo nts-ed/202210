@@ -1,0 +1,44 @@
+package com.northsea.handler;
+
+import com.northsea.service.impl.UserDetailServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Component;
+
+/**
+ * @Author BenSitu
+ * @CreateDate 2022/10/18
+ * @Description
+ */
+
+//@Component
+public class SelfAuthenticationProvider implements AuthenticationProvider {
+    @Autowired
+    private UserDetailServiceImpl userDetailService;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @Override
+    public Authentication authenticate(Authentication authentication) throws AuthenticationException {
+        String account= authentication.getName();     //获取用户名
+        String password= (String) authentication.getCredentials();  //获取密码
+        UserDetails userDetails= userDetailService.loadUserByUsername(account);
+        boolean checkPassword= passwordEncoder.matches(password,userDetails.getPassword());
+        if(!checkPassword){
+            throw new BadCredentialsException("密码不正确，请重新登录!");
+        }
+        return new UsernamePasswordAuthenticationToken(account,password,userDetails.getAuthorities());
+    }
+
+    @Override
+    public boolean supports(Class<?> aClass) {
+        return true;
+    }
+}

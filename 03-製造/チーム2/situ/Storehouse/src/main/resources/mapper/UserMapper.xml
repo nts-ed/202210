@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.northsea.dao.UserDao">
+    <!--
+          id = "接口中的方法名"
+          parameterType = "接口中传入方法的参数类型"
+          resultType = "返回实体类对象：包.类名"  处理结果集 自动封装
+          注意:sql语句后不要出现";"号
+              查询：select标签
+              增加：insert标签
+              修改：update标签
+              删除：delete标签
+      -->
+<!--    <select id="findActiveBlogLike" resultType="Blog">-->
+<!--        SELECT * FROM BLOG-->
+<!--        <where>-->
+<!--            <if test="state != null">-->
+<!--                state = #{state}-->
+<!--            </if>-->
+<!--            <if test="category != null">-->
+<!--                AND category = #{category}-->
+<!--            </if>-->
+<!--            <if test="title != null">-->
+<!--                AND title like #{title}-->
+<!--            </if>-->
+<!--        </where>-->
+<!--    </select>-->
+
+</mapper>

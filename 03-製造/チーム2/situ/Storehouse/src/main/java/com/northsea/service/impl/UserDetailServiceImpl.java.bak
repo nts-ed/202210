@@ -1,0 +1,57 @@
+package com.northsea.service.impl;
+
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.northsea.dao.UserDao;
+import com.northsea.entity.User;
+import com.northsea.vo.LoginVo;
+import org.apache.logging.log4j.util.Strings;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * @Author BenSitu
+ * @CreateDate 2022/10/18
+ * @Description
+ */
+
+@Service
+public class UserDetailServiceImpl implements UserDetailsService {
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    private UserDao userDao;
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        LambdaQueryWrapper<User> lambdaQueryWrapper = new LambdaQueryWrapper<User>();
+        lambdaQueryWrapper.eq(Strings.isNotEmpty(username), User::getUserName, username).last("limit 1");
+        User user = this.userDao.selectOne(lambdaQueryWrapper);
+        if (user == null) {
+            throw new UsernameNotFoundException("根据用户名未查询到用户");
+        }
+
+        //数据封装为UserDetails返回
+        //return new UserLogin(user);
+
+        //获取用户权限，并把其添加到GrantedAuthority中
+        List<GrantedAuthority> grantedAuthorities=new ArrayList<>();
+        GrantedAuthority grantedAuthority=new SimpleGrantedAuthority(user.getRole());
+        grantedAuthorities.add(grantedAuthority);
+
+        //方法的返回值要求返回UserDetails这个数据类型，  UserDetails是接口，找它的实现类就好了
+        //new org.springframework.security.core.userdetails.User(String username,String password,Collection<? extends GrantedAuthority> authorities) 就是它的实现类
+        return new org.springframework.security.core.userdetails.User(username, user.getPassword(), grantedAuthorities);
+
+    }
+}

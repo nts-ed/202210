@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.northsea.dao.IODao">
+
+    <!--
+          id = "接口中的方法名"
+          parameterType = "接口中传入方法的参数类型"
+          resultType = "返回实体类对象：包.类名"  处理结果集 自动封装
+              查询：select标签
+              增加：insert标签
+              修改：update标签
+              删除：delete标签
+      -->
+    <!--    getIOInfoWithUpdateName(@Param(value = "io") IO io)-->
+    <select id="getIOInfoWithUpdateUser" resultType="com.northsea.entity.IO">
+        SELECT * FROM `t_stock_io` t1 INNER JOIN `t_user` t2 WHERE t1.create_user = t2.create_user AND del_flg = 0;
+    </select>
+
+
+    <!-- int saveIOInfo(IO iO);-->
+    <insert id="saveIOInfo" parameterType="com.northsea.entity.IO">
+        INSERT INTO `t_stock_io`( `id`,`in_out_no`, `io_type`, `io_num`, `remarks`, `create_user`, `update_user` ) VALUES (#{id}, #{inOutNo}, #{ioType}, #{ioNum}, #{remarks}, #{createUser}, #{updateUser} );
+    </insert>
+
+    <!--    getLastIOInfoRecordByIOID(@Param(value = "io") IO iO)   查询数据库倒数第一条数据-->
+    <select id="getLastIOInfoRecordByIOID" parameterType="String" resultType="com.northsea.entity.IO">
+        SELECT * FROM `t_stock_io` WHERE id = #{id} AND del_flg = 0 ORDER BY in_out_no desc limit 1;
+    </select>
+</mapper>
